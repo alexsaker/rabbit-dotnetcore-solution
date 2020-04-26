@@ -11,6 +11,30 @@ services:
     depends_on:
       - elasticsearch
       - kibana
+  logstash:
+    container_name: logstash
+    image: docker.elastic.co/logstash/logstash:7.6.2
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./logstash.conf:/etc/logstash/conf.d/logstash.conf:ro
+    depends_on:
+      - elasticsearch
+      - rabbitmq
+    networks:
+      - elastic
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.8.3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+      - ./custom_definitions.json:/etc/rabbitmq/custom_definitions.json:ro
+    networks:
+      - elastic
   elasticsearch:
     container_name: elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
