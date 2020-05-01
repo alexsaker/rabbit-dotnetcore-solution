@@ -47,7 +47,7 @@ dotnet restore
     }
   },
   "ElasticConfiguration": {
-    "Uri": "http://localhost:9200"
+    "Uri": "http://elasticsearch:9200"
   },
   "AllowedHosts": "*"
 }
@@ -110,3 +110,23 @@ cd WebApi
 docker build -t webapi .
 docker run --name webapi  -p 8080:80  webapi
 ```
+
+
+## Test Web Api
+
+```bash
+curl http://localhost:8080/WeatherForecast
+
+It should return something like: 
+
+[{"date":"2020-05-02T20:17:09.153683+00:00","temperatureC":29,"temperatureF":84,"summary":"Cool"},{"date":"2020-05-03T20:17:09.1537033+00:00","temperatureC":39,"temperatureF":102,"summary":"Chilly"},{"date":"2020-05-04T20:17:09.1537036+00:00","temperatureC":22,"temperatureF":71,"summary":"Sweltering"},{"date":"2020-05-05T20:17:09.1537037+00:00","temperatureC":21,"temperatureF":69,"summary":"Cool"},{"date":"2020-05-06T20:17:09.1537039+00:00","temperatureC":22,"temperatureF":71,"summary":"Balmy"}]
+
+
+Logging should return something like:
+
+webapi           | [20:17:09 INF] Returning weather information @ 05/01/2020 20:17:09
+webapi           | [20:17:09 INF] First Weather Forecast @  WeatherForecast: Date: 05/02/2020 20:17:09, TemperatureC: 29, Summary: Cool   
+webapi           | [20:17:09 INF] ###### Publishing WeatherForecast: Date: 05/02/2020 20:17:09, TemperatureC: 29, Summary: Cool
+
+```
+

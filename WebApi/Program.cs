@@ -10,7 +10,8 @@ using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using System.Reflection;
 using Serilog.Exceptions;
-
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 namespace WebApi
 {
     public class Program
@@ -21,6 +22,8 @@ namespace WebApi
 
             CreateHost(args);
         }
+
+
         private static void CreateHost(string[] args)
         {
             try
